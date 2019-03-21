@@ -41,4 +41,6 @@ def main():
     print("\nYour encrypted payload:\n")
     print(encrypted_payload)
 
+if __name__ == "__main__":
+    main()
     
