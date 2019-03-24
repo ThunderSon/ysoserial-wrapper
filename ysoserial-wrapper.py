@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 from argparse import ArgumentParser
-from base64 import b64decode, urlsafe_b64encode
+from base64 import b64decode, b64encode
 from hashlib import sha1
 from hmac import digest
 from os import environ
 from shlex import split
 from subprocess import check_output
+from urllib.parse import quote
 
 from pyDes import des
 
@@ -34,9 +35,8 @@ def encrypt(viewstate: bytes) -> str:
     d = des(key, mode=ECB, padmode=PKCS5)
     encrypted_viewstate = d.encrypt(viewstate)
     hmac_sha1 = digest(key, encrypted_viewstate, sha1)
-    encrypted_viewstate = urlsafe_b64encode(
-        encrypted_viewstate + hmac_sha1).decode()
-    return encrypted_viewstate
+    return quote(b64encode(
+        encrypted_viewstate + hmac_sha1).decode())
 
 
 def main():
