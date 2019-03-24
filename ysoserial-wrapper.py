@@ -31,7 +31,7 @@ def encrypt(viewstate: bytes) -> str:
     else:
         print("Please set the KEY environment variable with your encryption key.")
         exit()
-    d = des(key, ECB, PKCS5)
+    d = des(key, mode=ECB, padmode=PKCS5)
     encrypted_viewstate = d.encrypt(viewstate)
     hmac_sha1 = digest(key, encrypted_viewstate, sha1)
     encrypted_viewstate = urlsafe_b64encode(
