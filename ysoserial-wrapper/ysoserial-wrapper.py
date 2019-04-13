@@ -43,11 +43,11 @@ def encrypt(viewstate: bytes) -> str:
     Returns:
         DES encrypted base64 viewstate
     Raises:
-        KeyError: if the KEY environment variable is not set
+        KeyError: if the YSOSERIAL_KEY environment variable is not set
     """
-    if not 'KEY' in environ:
+    if not 'YSOSERIAL_KEY' in environ:
         raise KeyError("Please set the KEY environment variable with your encryption key.")
-    key = environ['KEY'].encode()
+    key = environ['YSOSERIAL_KEY'].encode()
     encrypted_viewstate = des(key).encrypt(viewstate, ECB, PAD_PKCS5)
     hmac_sha1 = digest(key, encrypted_viewstate, sha1)
     return quote(b64encode(encrypted_viewstate + hmac_sha1).decode())
